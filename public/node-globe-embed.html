@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Money Penny Bitcoin Node Globe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Three.js CDN -->
+    <script src="https://unpkg.com/three@0.161.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.161.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #111;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+      #app {
+        width: 100%;
+        height: 100%;
+      }
+      .error-message {
+        position: absolute;
+        left: 50%;
+        bottom: 16px;
+        transform: translateX(-50%);
+        padding: 8px 12px;
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        font-size: 12px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="error" class="error-message" style="display: none"></div>
+
+    <script>
+      // Basic sizes
+      const container = document.getElementById("app");
+      let width = container.clientWidth;
+      let height = container.clientHeight;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+      camera.position.set(0, 0, 4);
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      const controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.enablePan = false;
+      controls.minDistance = 2.3;
+      controls.maxDistance = 8;
+
+      // Pause auto-rotation while interacting
+      let isUserInteracting = false;
+      let lastInteractionTime = Date.now();
+      const AUTO_ROTATE_DELAY = 2500;
+
+      controls.addEventListener("start", function () {
+        isUserInteracting = true;
+        lastInteractionTime = Date.now();
+      });
+      controls.addEventListener("end", function () {
+        lastInteractionTime = Date.now();
+        setTimeout(function () {
+          isUserInteracting = false;
+        }, AUTO_ROTATE_DELAY);
+      });
+
+      // Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+      scene.add(ambientLight);
+      const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
+      dirLight.position.set(5, 3, 5);
+      scene.add(dirLight);
+
+      // Globe
+      const RADIUS = 1;
+      const globeGeometry = new THREE.SphereGeometry(RADIUS, 64, 64);
+      const globeMaterial = new THREE.MeshStandardMaterial({
+        color: 0x224466,
+        roughness: 1,
+        metalness: 0,
+      });
+      const globe = new THREE.Mesh(globeGeometry, globeMaterial);
+      scene.add(globe);
+
+      // Helper function: convert lat/lon to XYZ on sphere
+      function latLonToVector3(lat, lon, radius) {
+        const phi = (90 - lat) * (Math.PI / 180);
+        const theta = (lon + 180) * (Math.PI / 180);
+        const x = -radius * Math.sin(phi) * Math.cos(theta);
+        const z = radius * Math.sin(phi) * Math.sin(theta);
+        const y = radius * Math.cos(phi);
+        return new THREE.Vector3(x, y, z);
+      }
+
+      // Add a node
+      function addNode(lat, lon, type) {
+        const color = type === "core" ? 0xff4444 : 0xff9900;
+        const nodeGeometry = new THREE.SphereGeometry(0.015, 6, 6);
+        const nodeMaterial = new THREE.MeshBasicMaterial({ color: color });
+        const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+        const pos = latLonToVector3(lat, lon, RADIUS + 0.01);
+        node.position.copy(pos);
+        scene.add(node);
+      }
+
+      // Fallback dummy nodes across the globe
+      function addDummyNodes() {
+        const dummyNodes = [
+          { lat: 37.7749, lon: -122.4194, type: "core" }, // SF
+          { lat: 40.7128, lon: -74.006, type: "knots" }, // NYC
+          { lat: 51.5074, lon: -0.1278, type: "core" }, // London
+          { lat: 52.52, lon: 13.405, type: "knots" }, // Berlin
+          { lat: 35.6895, lon: 139.6917, type: "core" }, // Tokyo
+          { lat: -33.8688, lon: 151.2093, type: "knots" }, // Sydney
+          { lat: 1.3521, lon: 103.8198, type: "core" }, // Singapore
+        ];
+        dummyNodes.forEach((n) => addNode(n.lat, n.lon, n.type));
+      }
+
+      // Fetch real node data from Bitnodes API (best-effort)
+      async function loadNodes() {
+        const errorEl = document.getElementById("error");
+        try {
+          const res = await fetch(
+            "https://bitnodes.io/api/v1/snapshots/latest/"
+          );
+          if (!res.ok) {
+            throw new Error("HTTP " + res.status);
+          }
+          const data = await res.json();
+          if (!data.nodes) {
+            throw new Error("Unexpected response format");
+          }
+
+          const entries = Object.entries(data.nodes);
+          const maxNodes = 800;
+          for (let i = 0; i < entries.length && i < maxNodes; i++) {
+            const [, nodeInfo] = entries[i];
+            const lat = nodeInfo[5];
+            const lon = nodeInfo[6];
+            if (typeof lat === "number" && typeof lon === "number") {
+              // Bitnodes does not distinguish core/knots; randomize for visual interest
+              const type = Math.random() > 0.5 ? "core" : "knots";
+              addNode(lat, lon, type);
+            }
+          }
+        } catch (err) {
+          console.error(err);
+          errorEl.textContent =
+            "Could not load live node data. Showing demo node distribution.";
+          errorEl.style.display = "block";
+          addDummyNodes();
+        }
+      }
+
+      loadNodes();
+
+      // Handle resize
+      window.addEventListener("resize", function () {
+        const rect = container.getBoundingClientRect();
+        width = rect.width;
+        height = rect.height;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+      });
+
+      // Animation loop
+      function animate() {
+        requestAnimationFrame(animate);
+
+        const now = Date.now();
+        const timeSinceInteraction = now - lastInteractionTime;
+        if (!isUserInteracting && timeSinceInteraction > AUTO_ROTATE_DELAY) {
+          globe.rotation.y += 0.0018;
+        }
+
+        controls.update();
+        renderer.render(scene, camera);
+      }
+
+      animate();
+    </script>
+  </body>
+</html>
+
+

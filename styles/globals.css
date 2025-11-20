@@ -1,0 +1,266 @@
+:root {
+  --mp-turquoise: #46e9cf;
+  --mp-bg-concrete: #dadada;
+  --mp-bg-concrete-dark: #b5b5b5;
+  --mp-accent-magenta: #b4005a;
+  --mp-text: #222222;
+  --mp-heading: #111111;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: var(--mp-text);
+  background: radial-gradient(
+      circle at top left,
+      var(--mp-bg-concrete),
+      var(--mp-bg-concrete-dark)
+    );
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mp-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.mp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+}
+
+.mp-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.mp-logo-placeholder {
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  background: #4b3a5a;
+}
+
+.mp-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  letter-spacing: 0.2em;
+}
+
+.mp-brand-text {
+  font-family: "Times New Roman", "Georgia", serif;
+  font-size: 1.25rem;
+}
+
+.mp-brand-line {
+  width: 40px;
+  height: 1px;
+  background: #ccc;
+}
+
+.mp-nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.mp-nav-link {
+  font-family: "Times New Roman", "Georgia", serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid transparent;
+}
+
+.mp-nav-link-active {
+  border-color: #111;
+}
+
+.mp-nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.mp-nav-toggle span {
+  width: 20px;
+  height: 2px;
+  background: #222;
+}
+
+.mp-ribbon {
+  background: var(--mp-turquoise);
+  text-align: center;
+  font-family: "Impact", "Anton", system-ui, sans-serif;
+  font-size: 2.4rem;
+  letter-spacing: 0.15em;
+  padding: 1.8rem 1rem;
+}
+
+.mp-main {
+  flex: 1;
+  padding: 2rem 1.5rem 3rem;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.mp-footer {
+  padding: 1rem 1.5rem;
+  font-size: 0.75rem;
+  text-align: center;
+  color: #555;
+}
+
+.mp-section-title {
+  font-family: "Times New Roman", "Georgia", serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.mp-heading {
+  font-family: "Times New Roman", "Georgia", serif;
+  font-size: 1.6rem;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.mp-subheading {
+  font-family: "Times New Roman", "Georgia", serif;
+  font-size: 1.1rem;
+  margin: 1.25rem 0 0.5rem;
+}
+
+.mp-body {
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+
+.mp-link {
+  color: #0044aa;
+  text-decoration: underline;
+}
+
+.mp-pill-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.mp-pill-button {
+  border-radius: 999px;
+  border: 2px solid var(--mp-accent-magenta);
+  padding: 0.4rem 1.2rem;
+  font-family: "Times New Roman", "Georgia", serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.mp-pill-button:hover {
+  background: var(--mp-accent-magenta);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.mp-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+.mp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  font-family: "Times New Roman", "Georgia", serif;
+}
+
+.mp-table th,
+.mp-table td {
+  padding: 0.35rem 0.5rem;
+}
+
+.mp-table th {
+  text-align: left;
+}
+
+.mp-table tfoot td {
+  padding-top: 0.75rem;
+  font-weight: bold;
+}
+
+.mp-chart-frame {
+  width: 100%;
+  border: 0;
+  min-height: 420px;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  margin-bottom: 1.5rem;
+}
+
+.mp-node-globe-container {
+  width: 100%;
+  min-height: 420px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 768px) {
+  .mp-nav-desktop {
+    display: none;
+  }
+
+  .mp-nav-toggle {
+    display: flex;
+  }
+
+  .mp-nav-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem 1.5rem;
+  }
+
+  .mp-main {
+    padding-inline: 1rem;
+  }
+
+  .mp-ribbon {
+    font-size: 1.5rem;
+    padding-block: 1.2rem;
+  }
+}
+
+

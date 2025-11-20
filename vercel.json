@@ -1,0 +1,11 @@
+{
+  "framework": "nextjs",
+  "routes": [
+    {
+      "src": "/node-globe-embed",
+      "dest": "/node-globe-embed.html"
+    }
+  ]
+}
+
+
