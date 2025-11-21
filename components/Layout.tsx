@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
@@ -32,11 +33,21 @@ export default function Layout({ title, children }: LayoutProps) {
           content="Money Penny – Bitcoin education, tools, links and node visualization."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="mp-page">
         <header className="mp-header">
           <div className="mp-header-left">
-            <div className="mp-logo-placeholder" aria-hidden="true" />
+            <Link href="/" className="mp-logo-link" aria-label="Money Penny home">
+              <Image
+                src="/moneypenny-icon.jpg"
+                alt="Money Penny logo"
+                width={48}
+                height={48}
+                priority
+                className="mp-logo"
+              />
+            </Link>
             <div className="mp-brand">
               <span className="mp-brand-line" />
               <span className="mp-brand-text">MONEY PENNY</span>

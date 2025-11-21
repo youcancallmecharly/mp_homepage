@@ -10,4 +10,7 @@ yarn-debug.log*
 yarn-error.log*
 .vercel
 
+# Wix-specific files (not needed for Vercel deployment)
+public/node-globe-embed.html
+
 

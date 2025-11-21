@@ -1,0 +1,259 @@
+{
+  "updatedAt": "2025-11-20T16:03:11.597Z",
+  "totalNodes": 28,
+  "source": "https://bitnodes.io/api/v1/snapshots/latest/",
+  "nodes": [
+    {
+      "address": "47.149.41.219:8333",
+      "type": "core",
+      "lat": 34.1172,
+      "lon": -117.6472,
+      "city": "Upland",
+      "country": "US",
+      "asn": "AS5650"
+    },
+    {
+      "address": "13.48.242.195:8333",
+      "type": "core",
+      "lat": 59.3287,
+      "lon": 18.0717,
+      "city": "Stockholm",
+      "country": "SE",
+      "asn": "AS16509"
+    },
+    {
+      "address": "206.221.189.10:8333",
+      "type": "core",
+      "lat": 40.5511,
+      "lon": -74.4606,
+      "city": "Piscataway",
+      "country": "US",
+      "asn": "AS23470"
+    },
+    {
+      "address": "34.208.54.193:8333",
+      "type": "core",
+      "lat": 45.8401,
+      "lon": -119.705,
+      "city": "Boardman",
+      "country": "US",
+      "asn": "AS16509"
+    },
+    {
+      "address": "50.112.7.132:8333",
+      "type": "core",
+      "lat": 45.8401,
+      "lon": -119.705,
+      "city": "Boardman",
+      "country": "US",
+      "asn": "AS16509"
+    },
+    {
+      "address": "58.96.73.95:8333",
+      "type": "core",
+      "lat": -37.8159,
+      "lon": 144.9669,
+      "city": "Melbourne",
+      "country": "AU",
+      "asn": "AS10143"
+    },
+    {
+      "address": "72.50.40.129:8333",
+      "type": "core",
+      "lat": 18.4038,
+      "lon": -66.1493,
+      "city": "Bayamón",
+      "country": "PR",
+      "asn": "AS10396"
+    },
+    {
+      "address": "76.184.54.136:8333",
+      "type": "knots",
+      "lat": 32.8242,
+      "lon": -96.7507,
+      "city": "Dallas",
+      "country": "US",
+      "asn": "AS11427"
+    },
+    {
+      "address": "82.64.135.138:8333",
+      "type": "core",
+      "lat": 48.8582,
+      "lon": 2.3387,
+      "city": null,
+      "country": "FR",
+      "asn": "AS12322"
+    },
+    {
+      "address": "85.159.237.71:8333",
+      "type": "core",
+      "lat": 52.3824,
+      "lon": 4.8995,
+      "city": null,
+      "country": "NL",
+      "asn": "AS43350"
+    },
+    {
+      "address": "93.115.26.6:8333",
+      "type": "core",
+      "lat": 55.4167,
+      "lon": 24,
+      "city": null,
+      "country": "LT",
+      "asn": "AS16125"
+    },
+    {
+      "address": "97.128.97.99:8333",
+      "type": "core",
+      "lat": 34.919,
+      "lon": -92.1419,
+      "city": "Jacksonville",
+      "country": "US",
+      "asn": "AS6167"
+    },
+    {
+      "address": "14.201.221.187:8333",
+      "type": "knots",
+      "lat": -34.9282,
+      "lon": 138.5999,
+      "city": "Adelaide",
+      "country": "AU",
+      "asn": "AS7545"
+    },
+    {
+      "address": "162.33.177.91:14706",
+      "type": "knots",
+      "lat": 41.8835,
+      "lon": -87.6305,
+      "city": "Chicago",
+      "country": "US",
+      "asn": "AS399629"
+    },
+    {
+      "address": "186.204.105.193:8333",
+      "type": "core",
+      "lat": -23.5475,
+      "lon": -46.6361,
+      "city": "São Paulo",
+      "country": "BR",
+      "asn": "AS28573"
+    },
+    {
+      "address": "65.21.18.44:8333",
+      "type": "core",
+      "lat": 60.1719,
+      "lon": 24.9347,
+      "city": "Helsinki",
+      "country": "FI",
+      "asn": "AS24940"
+    },
+    {
+      "address": "70.29.28.139:8333",
+      "type": "core",
+      "lat": 45.471,
+      "lon": -75.4737,
+      "city": "Orléans",
+      "country": "CA",
+      "asn": "AS577"
+    },
+    {
+      "address": "73.30.88.82:8333",
+      "type": "core",
+      "lat": 39.9597,
+      "lon": -75.1995,
+      "city": "Philadelphia",
+      "country": "US",
+      "asn": "AS7922"
+    },
+    {
+      "address": "91.92.152.122:8333",
+      "type": "core",
+      "lat": 46.2052,
+      "lon": 6.142,
+      "city": "Geneva",
+      "country": "CH",
+      "asn": "AS61098"
+    },
+    {
+      "address": "92.189.22.54:8333",
+      "type": "knots",
+      "lat": 39.4776,
+      "lon": -6.3798,
+      "city": "Cáceres",
+      "country": "ES",
+      "asn": "AS12479"
+    },
+    {
+      "address": "136.36.232.236:8333",
+      "type": "knots",
+      "lat": 40.6596,
+      "lon": -111.9195,
+      "city": "Salt Lake City",
+      "country": "US",
+      "asn": "AS16591"
+    },
+    {
+      "address": "144.6.36.164:8333",
+      "type": "core",
+      "lat": -33.9276,
+      "lon": 151.1411,
+      "city": "Sydney",
+      "country": "AU",
+      "asn": "AS4764"
+    },
+    {
+      "address": "162.226.145.44:8333",
+      "type": "core",
+      "lat": 33.1366,
+      "lon": -117.0611,
+      "city": "Escondido",
+      "country": "US",
+      "asn": "AS7018"
+    },
+    {
+      "address": "174.166.173.220:8333",
+      "type": "core",
+      "lat": 40.5555,
+      "lon": -74.2855,
+      "city": "Woodbridge",
+      "country": "US",
+      "asn": "AS7922"
+    },
+    {
+      "address": "179.89.229.173:8333",
+      "type": "core",
+      "lat": -20.8188,
+      "lon": -49.3711,
+      "city": "São José do Rio Preto",
+      "country": "BR",
+      "asn": "AS26599"
+    },
+    {
+      "address": "86.107.186.125:8333",
+      "type": "core",
+      "lat": 52.9937,
+      "lon": 6.5586,
+      "city": "Assen",
+      "country": "NL",
+      "asn": "AS207375"
+    },
+    {
+      "address": "167.235.164.16:8333",
+      "type": "core",
+      "lat": 49.4527,
+      "lon": 11.0783,
+      "city": "Nuremberg",
+      "country": "DE",
+      "asn": "AS24940"
+    },
+    {
+      "address": "203.206.9.107:8333",
+      "type": "core",
+      "lat": -34.8332,
+      "lon": 138.6809,
+      "city": "Adelaide",
+      "country": "AU",
+      "asn": "AS7545"
+    }
+  ]
+}

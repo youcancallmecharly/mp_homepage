@@ -55,11 +55,18 @@ a {
   gap: 0.75rem;
 }
 
-.mp-logo-placeholder {
+.mp-logo-link {
+  display: inline-flex;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.mp-logo {
   width: 48px;
   height: 48px;
-  border-radius: 4px;
-  background: #4b3a5a;
+  object-fit: cover;
+  display: block;
 }
 
 .mp-brand {
@@ -230,11 +237,27 @@ a {
 }
 
 .mp-node-globe-container {
-  width: 100%;
-  min-height: 420px;
-  border-radius: 8px;
+  width: min(100%, 640px);
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+  margin: 1.5rem auto;
+  background: radial-gradient(circle at top, #f4f4f4, #bdbdbd);
+  position: relative;
+}
+
+.mp-node-globe-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.mp-node-globe-meta {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: -0.25rem;
 }
 
 @media (max-width: 768px) {

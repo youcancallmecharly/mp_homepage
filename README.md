@@ -72,11 +72,32 @@ The globe is implemented in two ways:
 1. **Next.js React component** – used on the `/nodes` page:
    - File: `components/BitcoinNodeGlobe.tsx`
    - Loaded client-side with `next/dynamic` (SSR disabled).
+   - Reads cached data from `public/data/bitnodes-cache.json` and displays metadata below the globe.
 2. **Standalone HTML embed** – `public/node-globe-embed.html`
-   - Includes all necessary HTML/CSS/JS and pulls Three.js from a CDN.
-   - Tries to load live node positions from the Bitnodes API:
-     - `https://bitnodes.io/api/v1/snapshots/latest/`
-   - If the request fails (e.g. CORS, rate limit), it falls back to a small demo set of nodes.
+   - Includes all necessary HTML/CSS/JS and pulls Three.js from a CDN (no build step required).
+   - Loads the same cached JSON via `/data/bitnodes-cache.json`. You can override the source without rebuilding by appending `?dataUrl=https://example.com/my-nodes.json` to the IFrame URL.
+   - Falls back to a small demo distribution if the cache cannot be loaded.
+
+### Updating the cached node data
+
+Bitnodes limits anonymous API access (~30 requests/day), so the globe ships with a pre-generated snapshot. To refresh it:
+
+```bash
+# optional: tweak how many nodes to keep and the throttle delay
+MAX_NODES=150 REQUEST_DELAY_MS=2500 npm run fetch:nodes
+```
+
+The script (`scripts/update-node-cache.js`) will:
+
+1. Download the latest reachable node snapshot from Bitnodes.
+2. Resolve geolocation data for public IPv4 addresses (skipping `.onion` and IPv6 entries).
+3. Save the result to `public/data/bitnodes-cache.json` together with metadata (`updatedAt`, `totalNodes`).
+
+Tips:
+
+- Start with small batches (e.g. `MAX_NODES=100`) to stay within the daily limit. If you have a Bitnodes PRO key or run the crawler yourself you can bump both values.
+- Commit the updated JSON if you want Vercel deployments to pick it up automatically.
+- The standalone embed will read whichever cache the site serves; no extra steps are needed for Wix once you redeploy.
 
 ### Using the embed in Wix
 
@@ -103,12 +124,12 @@ If you prefer, you can host `node-globe-embed.html` on any static host (S3, GitH
 - Mouse wheel / pinch to zoom (clamped to a sensible distance).
 - Orange points: **Knots** nodes (visualised).
 - Red points: **Core** nodes (visualised).
-- If live data is not available, a fixed demo distribution is rendered.
+- If the cache fails to load, a small demo distribution is rendered.
 
 ## Differences vs. original Wix site
 
 - Fonts are approximated using system fonts and a serif/sans-serif combination instead of the exact Wix fonts.
 - The education table layout and button styling match the spirit of the design but are slightly simplified for maintainability.
-- The node globe assigns node types (Core / Knots) randomly when using live data, because the upstream API does not distinguish them.
+- Knot/Core colouring is derived from the Bitnodes user-agent string (`/Knots` vs `/Satoshi`). Nodes without that hint default to **Core**.
 
 
