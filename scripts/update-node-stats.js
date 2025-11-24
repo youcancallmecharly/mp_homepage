@@ -169,12 +169,21 @@ async function main() {
 
   // Process Tor nodes (no GeoIP needed)
   console.log(`Processing ${torNodes.length} Tor nodes…`);
+  let torKnotsCount = 0;
+  let torCoreCount = 0;
+  
   for (const [address, nodeData] of torNodes) {
     const userAgent = nodeData[0] || "";
     const type = classifyNode(userAgent);
+    
+    // Debug: log first few Tor nodes to see their user agents
+    if (torKnotsCount + torCoreCount < 10) {
+      console.log(`  Tor node: ${address.substring(0, 30)}... - UserAgent: "${userAgent}" - Type: ${type}`);
+    }
 
     if (type === "knots") {
       knotsTotal++;
+      torKnotsCount++;
       if (!knotsByCountry["TOR"]) {
         knotsByCountry["TOR"] = {
           countryCode: "TOR",
@@ -185,6 +194,7 @@ async function main() {
       knotsByCountry["TOR"].knots++;
     } else {
       coreTotal++;
+      torCoreCount++;
       if (!coreByCountry["TOR"]) {
         coreByCountry["TOR"] = {
           countryCode: "TOR",
@@ -195,6 +205,8 @@ async function main() {
       coreByCountry["TOR"].core++;
     }
   }
+  
+  console.log(`  Tor nodes breakdown: ${torKnotsCount} Knots, ${torCoreCount} Core`);
 
   // Convert to arrays and sort by count (desc) initially
   const knotsArray = Object.values(knotsByCountry)
