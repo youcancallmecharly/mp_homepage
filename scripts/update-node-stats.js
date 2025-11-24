@@ -9,6 +9,8 @@ const fs = require("fs/promises");
 const path = require("path");
 
 const SNAPSHOT_URL = "https://bitnodes.io/api/v1/snapshots/latest/";
+const NODE_DETAIL_URL = (address) =>
+  `https://bitnodes.io/api/v1/nodes/${address.replace(":", "-").replace(".onion", "-onion")}/`;
 // Using ip-api.com (free, 45 req/min, no API key needed)
 // Alternative: https://ipapi.co/{ip}/json/ (1000 req/day free)
 const GEOIP_URL = (ip) => `http://ip-api.com/json/${ip}?fields=status,country,countryCode`;
@@ -167,46 +169,84 @@ async function main() {
     }
   }
 
-  // Process Tor nodes (no GeoIP needed)
-  console.log(`Processing ${torNodes.length} Tor nodes…`);
+  // Process Tor nodes - need to fetch details for proper classification
+  // (Snapshot only has protocol version, not full user agent)
+  console.log(`Processing ${torNodes.length} Tor nodes (fetching details for classification)…`);
   let torKnotsCount = 0;
   let torCoreCount = 0;
+  const TOR_NODES_TO_CHECK = Math.min(100, torNodes.length); // Check up to 100 Tor nodes for type
   
-  for (const [address, nodeData] of torNodes) {
-    const userAgent = nodeData[0] || "";
-    const type = classifyNode(userAgent);
+  for (let i = 0; i < TOR_NODES_TO_CHECK; i++) {
+    const [address, nodeData] = torNodes[i];
     
-    // Debug: log first few Tor nodes to see their user agents
-    if (torKnotsCount + torCoreCount < 10) {
-      console.log(`  Tor node: ${address.substring(0, 30)}... - UserAgent: "${userAgent}" - Type: ${type}`);
-    }
-
-    if (type === "knots") {
-      knotsTotal++;
-      torKnotsCount++;
-      if (!knotsByCountry["TOR"]) {
-        knotsByCountry["TOR"] = {
-          countryCode: "TOR",
-          country: "Tor Nodes",
-          knots: 0,
-        };
+    try {
+      // Fetch node details to get full user agent
+      const detail = await fetchJson(NODE_DETAIL_URL(address));
+      const detailData = detail.data || [];
+      const userAgent = detailData[1] || nodeData[0] || "";
+      const type = classifyNode(userAgent);
+      
+      if (type === "knots") {
+        torKnotsCount++;
+      } else {
+        torCoreCount++;
       }
-      knotsByCountry["TOR"].knots++;
-    } else {
-      coreTotal++;
+      
+      // Debug: log first few
+      if (i < 5) {
+        console.log(`  Tor node: ${address.substring(0, 30)}... - UserAgent: "${userAgent}" - Type: ${type}`);
+      }
+    } catch (err) {
+      // If detail fetch fails, default to core
       torCoreCount++;
-      if (!coreByCountry["TOR"]) {
-        coreByCountry["TOR"] = {
-          countryCode: "TOR",
-          country: "Tor Nodes",
-          core: 0,
-        };
-      }
-      coreByCountry["TOR"].core++;
+    }
+    
+    // Rate limiting for detail requests
+    if (i < TOR_NODES_TO_CHECK - 1) {
+      await sleep(REQUEST_DELAY_MS);
     }
   }
   
-  console.log(`  Tor nodes breakdown: ${torKnotsCount} Knots, ${torCoreCount} Core`);
+  // Estimate distribution: if we checked nodes, use that ratio for all Tor nodes
+  const totalTorNodes = torNodes.length;
+  let estimatedTorKnots = 0;
+  let estimatedTorCore = 0;
+  
+  if (TOR_NODES_TO_CHECK > 0 && (torKnotsCount + torCoreCount) > 0) {
+    const knotsRatio = torKnotsCount / (torKnotsCount + torCoreCount);
+    estimatedTorKnots = Math.round(totalTorNodes * knotsRatio);
+    estimatedTorCore = totalTorNodes - estimatedTorKnots;
+  } else {
+    // Fallback: if we couldn't check any, assume all are core
+    estimatedTorCore = totalTorNodes;
+  }
+  
+  console.log(`  Tor nodes breakdown (estimated from ${TOR_NODES_TO_CHECK} samples): ${estimatedTorKnots} Knots, ${estimatedTorCore} Core`);
+  
+  // Add to statistics
+  if (estimatedTorKnots > 0) {
+    knotsTotal += estimatedTorKnots;
+    if (!knotsByCountry["TOR"]) {
+      knotsByCountry["TOR"] = {
+        countryCode: "TOR",
+        country: "Tor Nodes",
+        knots: 0,
+      };
+    }
+    knotsByCountry["TOR"].knots = estimatedTorKnots;
+  }
+  
+  if (estimatedTorCore > 0) {
+    coreTotal += estimatedTorCore;
+    if (!coreByCountry["TOR"]) {
+      coreByCountry["TOR"] = {
+        countryCode: "TOR",
+        country: "Tor Nodes",
+        core: 0,
+      };
+    }
+    coreByCountry["TOR"].core = estimatedTorCore;
+  }
 
   // Convert to arrays and sort by count (desc) initially
   const knotsArray = Object.values(knotsByCountry)
