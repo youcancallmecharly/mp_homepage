@@ -1,0 +1,51 @@
+name: Update Bitcoin Node Statistics
+
+on:
+  schedule:
+    # Run every Sunday at 2:00 AM UTC (3:00 AM CET / 4:00 AM CEST)
+    - cron: '0 2 * * 0'
+  workflow_dispatch: # Allow manual trigger from GitHub UI
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Fetch and update node statistics
+        run: |
+          MAX_NODES=1000 REQUEST_DELAY_MS=1500 npm run fetch:stats
+        env:
+          NODE_ENV: production
+      
+      - name: Check for changes
+        id: verify-changed-files
+        run: |
+          if [ -n "$(git status --porcelain public/data/node-stats.json)" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Commit and push changes
+        if: steps.verify-changed-files.outputs.changed == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add public/data/node-stats.json
+          git commit -m "Auto-update: Bitcoin node statistics [$(date +'%Y-%m-%d')]"
+          git push
+

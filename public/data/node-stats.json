@@ -1,12 +1,187 @@
 {
-  "updatedAt": null,
+  "updatedAt": "2025-11-24T08:41:16.902Z",
   "knots": {
     "total": 0,
     "byCountry": []
   },
   "core": {
-    "total": 0,
-    "byCountry": []
+    "total": 245,
+    "byCountry": [
+      {
+        "countryCode": "US",
+        "country": "United States",
+        "core": 90
+      },
+      {
+        "countryCode": "DE",
+        "country": "Germany",
+        "core": 34
+      },
+      {
+        "countryCode": "CA",
+        "country": "Canada",
+        "core": 14
+      },
+      {
+        "countryCode": "FR",
+        "country": "France",
+        "core": 13
+      },
+      {
+        "countryCode": "CH",
+        "country": "Switzerland",
+        "core": 11
+      },
+      {
+        "countryCode": "KR",
+        "country": "South Korea",
+        "core": 11
+      },
+      {
+        "countryCode": "NL",
+        "country": "The Netherlands",
+        "core": 9
+      },
+      {
+        "countryCode": "RU",
+        "country": "Russia",
+        "core": 8
+      },
+      {
+        "countryCode": "GB",
+        "country": "United Kingdom",
+        "core": 8
+      },
+      {
+        "countryCode": "AU",
+        "country": "Australia",
+        "core": 6
+      },
+      {
+        "countryCode": "PL",
+        "country": "Poland",
+        "core": 5
+      },
+      {
+        "countryCode": "FI",
+        "country": "Finland",
+        "core": 5
+      },
+      {
+        "countryCode": "IT",
+        "country": "Italy",
+        "core": 3
+      },
+      {
+        "countryCode": "SE",
+        "country": "Sweden",
+        "core": 3
+      },
+      {
+        "countryCode": "SG",
+        "country": "Singapore",
+        "core": 2
+      },
+      {
+        "countryCode": "JP",
+        "country": "Japan",
+        "core": 2
+      },
+      {
+        "countryCode": "BG",
+        "country": "Bulgaria",
+        "core": 2
+      },
+      {
+        "countryCode": "NO",
+        "country": "Norway",
+        "core": 2
+      },
+      {
+        "countryCode": "IN",
+        "country": "India",
+        "core": 2
+      },
+      {
+        "countryCode": "IL",
+        "country": "Israel",
+        "core": 1
+      },
+      {
+        "countryCode": "ZA",
+        "country": "South Africa",
+        "core": 1
+      },
+      {
+        "countryCode": "MD",
+        "country": "Moldova",
+        "core": 1
+      },
+      {
+        "countryCode": "LT",
+        "country": "Lithuania",
+        "core": 1
+      },
+      {
+        "countryCode": "MY",
+        "country": "Malaysia",
+        "core": 1
+      },
+      {
+        "countryCode": "TR",
+        "country": "Türkiye",
+        "core": 1
+      },
+      {
+        "countryCode": "PT",
+        "country": "Portugal",
+        "core": 1
+      },
+      {
+        "countryCode": "RO",
+        "country": "Romania",
+        "core": 1
+      },
+      {
+        "countryCode": "CN",
+        "country": "China",
+        "core": 1
+      },
+      {
+        "countryCode": "HK",
+        "country": "Hong Kong",
+        "core": 1
+      },
+      {
+        "countryCode": "XX",
+        "country": "Unknown",
+        "core": 1
+      },
+      {
+        "countryCode": "GR",
+        "country": "Greece",
+        "core": 1
+      },
+      {
+        "countryCode": "LU",
+        "country": "Luxembourg",
+        "core": 1
+      },
+      {
+        "countryCode": "CZ",
+        "country": "Czechia",
+        "core": 1
+      },
+      {
+        "countryCode": "BH",
+        "country": "Bahrain",
+        "core": 1
+      }
+    ]
+  },
+  "meta": {
+    "processed": 245,
+    "skipped": 755,
+    "totalInSnapshot": 23673
   }
 }
-

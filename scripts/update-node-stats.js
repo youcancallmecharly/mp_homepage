@@ -28,7 +28,7 @@ function sleep(ms) {
 }
 
 function classifyNode(userAgent) {
-  if (!userAgent) return "core";
+  if (!userAgent || typeof userAgent !== "string") return "core";
   return userAgent.toLowerCase().includes("knots") ? "knots" : "core";
 }
 
