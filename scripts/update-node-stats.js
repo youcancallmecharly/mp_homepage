@@ -42,7 +42,7 @@ function extractIP(address) {
 
 function isPublicIPv4(ip) {
   if (!ip) return false;
-  if (ip.includes(".onion")) return false;
+  if (ip.includes(".onion")) return false; // Tor nodes handled separately
   if (ip.includes(":") && !ip.includes(".")) return false; // IPv6
   // Basic IPv4 check
   const parts = ip.split(".");
@@ -51,6 +51,10 @@ function isPublicIPv4(ip) {
     const num = parseInt(part, 10);
     return !isNaN(num) && num >= 0 && num <= 255;
   });
+}
+
+function isTorNode(address) {
+  return address && address.includes(".onion");
 }
 
 async function fetchJson(url) {
@@ -92,25 +96,40 @@ async function main() {
   let processed = 0;
   let skipped = 0;
 
+  // First, separate IPv4 nodes and Tor nodes
+  console.log("Filtering nodes…");
+  const validNodes = [];
+  const torNodes = [];
   const nodeEntries = Object.entries(nodes);
-  const toProcess = nodeEntries.slice(0, MAX_NODES);
+  
+  for (const [address, nodeData] of nodeEntries) {
+    if (!nodeData || !Array.isArray(nodeData)) continue;
+    
+    if (isTorNode(address)) {
+      torNodes.push([address, nodeData]);
+    } else {
+      const ip = extractIP(address);
+      if (isPublicIPv4(ip)) {
+        validNodes.push([address, nodeData]);
+      }
+    }
+  }
+
+  console.log(`Found ${validNodes.length} valid IPv4 nodes and ${torNodes.length} Tor nodes.`);
+  const toProcess = validNodes.slice(0, MAX_NODES);
+  console.log(`Processing ${toProcess.length} IPv4 nodes with GeoIP lookup…`);
 
   for (let i = 0; i < toProcess.length; i++) {
     const [address, nodeData] = toProcess[i];
 
-    if (!nodeData || !Array.isArray(nodeData)) {
-      skipped++;
-      continue;
-    }
-
     const ip = extractIP(address);
-    if (!isPublicIPv4(ip)) {
-      skipped++;
-      continue;
-    }
-
     const userAgent = nodeData[0] || "";
     const type = classifyNode(userAgent);
+    
+    // Debug: log first few knots nodes found
+    if (type === "knots" && knotsTotal < 5) {
+      console.log(`  Found Knots node: ${address} - ${userAgent}`);
+    }
 
     // Get country via GeoIP
     const { country, countryCode } = await getCountryForIP(ip);
@@ -148,6 +167,35 @@ async function main() {
     }
   }
 
+  // Process Tor nodes (no GeoIP needed)
+  console.log(`Processing ${torNodes.length} Tor nodes…`);
+  for (const [address, nodeData] of torNodes) {
+    const userAgent = nodeData[0] || "";
+    const type = classifyNode(userAgent);
+
+    if (type === "knots") {
+      knotsTotal++;
+      if (!knotsByCountry["TOR"]) {
+        knotsByCountry["TOR"] = {
+          countryCode: "TOR",
+          country: "Tor Nodes",
+          knots: 0,
+        };
+      }
+      knotsByCountry["TOR"].knots++;
+    } else {
+      coreTotal++;
+      if (!coreByCountry["TOR"]) {
+        coreByCountry["TOR"] = {
+          countryCode: "TOR",
+          country: "Tor Nodes",
+          core: 0,
+        };
+      }
+      coreByCountry["TOR"].core++;
+    }
+  }
+
   // Convert to arrays and sort by count (desc) initially
   const knotsArray = Object.values(knotsByCountry)
     .filter((item) => item.knots > 0)
@@ -178,9 +226,10 @@ async function main() {
   await fs.writeFile(OUTPUT_FILE, JSON.stringify(output, null, 2), "utf8");
 
   console.log("\n✅ Statistics saved:");
-  console.log(`  Knots: ${knotsTotal} total, ${knotsArray.length} countries`);
-  console.log(`  Core: ${coreTotal} total, ${coreArray.length} countries`);
-  console.log(`  Processed: ${processed}, Skipped: ${skipped}`);
+  console.log(`  Knots: ${knotsTotal} total, ${knotsArray.length} countries/regions`);
+  console.log(`  Core: ${coreTotal} total, ${coreArray.length} countries/regions`);
+  console.log(`  IPv4 Processed: ${processed}, Skipped: ${skipped}`);
+  console.log(`  Tor Nodes: ${torNodes.length} total`);
   console.log(`  Output: ${OUTPUT_FILE}`);
 }
 

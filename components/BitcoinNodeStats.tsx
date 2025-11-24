@@ -95,7 +95,10 @@ export default function BitcoinNodeStats() {
   }
 
   function getCountryFlag(countryCode: string): string {
-    if (!countryCode || countryCode.length !== 2) return "🌍";
+    if (!countryCode) return "🌍";
+    // Special case for Tor nodes
+    if (countryCode === "TOR") return "🧅";
+    if (countryCode.length !== 2) return "🌍";
     const codePoints = countryCode
       .toUpperCase()
       .split("")
