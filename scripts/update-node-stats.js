@@ -95,6 +95,7 @@ async function main() {
   const coreByCountry = {};
   let knotsTotal = 0;
   let coreTotal = 0;
+  let torNodesTotal = 0; // Tor nodes as separate count (no Knots/Core distinction)
   let processed = 0;
   let skipped = 0;
 
@@ -169,85 +170,9 @@ async function main() {
     }
   }
 
-  // Process Tor nodes - need to fetch details for proper classification
-  // (Snapshot only has protocol version, not full user agent)
-  console.log(`Processing ${torNodes.length} Tor nodes (fetching details for classification)…`);
-  let torKnotsCount = 0;
-  let torCoreCount = 0;
-  // Check more Tor nodes for better accuracy (but still limited by rate limits)
-  const TOR_NODES_TO_CHECK = Math.min(200, torNodes.length); // Check up to 200 Tor nodes for type
-  
-  for (let i = 0; i < TOR_NODES_TO_CHECK; i++) {
-    const [address, nodeData] = torNodes[i];
-    
-    try {
-      // Fetch node details to get full user agent
-      const detail = await fetchJson(NODE_DETAIL_URL(address));
-      const detailData = detail.data || [];
-      const userAgent = detailData[1] || nodeData[0] || "";
-      const type = classifyNode(userAgent);
-      
-      if (type === "knots") {
-        torKnotsCount++;
-      } else {
-        torCoreCount++;
-      }
-      
-      // Debug: log first few
-      if (i < 5) {
-        console.log(`  Tor node: ${address.substring(0, 30)}... - UserAgent: "${userAgent}" - Type: ${type}`);
-      }
-    } catch (err) {
-      // If detail fetch fails, default to core
-      torCoreCount++;
-    }
-    
-    // Rate limiting for detail requests
-    if (i < TOR_NODES_TO_CHECK - 1) {
-      await sleep(REQUEST_DELAY_MS);
-    }
-  }
-  
-  // Estimate distribution: if we checked nodes, use that ratio for all Tor nodes
-  const totalTorNodes = torNodes.length;
-  let estimatedTorKnots = 0;
-  let estimatedTorCore = 0;
-  
-  if (TOR_NODES_TO_CHECK > 0 && (torKnotsCount + torCoreCount) > 0) {
-    const knotsRatio = torKnotsCount / (torKnotsCount + torCoreCount);
-    estimatedTorKnots = Math.round(totalTorNodes * knotsRatio);
-    estimatedTorCore = totalTorNodes - estimatedTorKnots;
-  } else {
-    // Fallback: if we couldn't check any, assume all are core
-    estimatedTorCore = totalTorNodes;
-  }
-  
-  console.log(`  Tor nodes breakdown (estimated from ${TOR_NODES_TO_CHECK} samples): ${estimatedTorKnots} Knots, ${estimatedTorCore} Core`);
-  
-  // Add to statistics
-  if (estimatedTorKnots > 0) {
-    knotsTotal += estimatedTorKnots;
-    if (!knotsByCountry["TOR"]) {
-      knotsByCountry["TOR"] = {
-        countryCode: "TOR",
-        country: "Tor Nodes",
-        knots: 0,
-      };
-    }
-    knotsByCountry["TOR"].knots = estimatedTorKnots;
-  }
-  
-  if (estimatedTorCore > 0) {
-    coreTotal += estimatedTorCore;
-    if (!coreByCountry["TOR"]) {
-      coreByCountry["TOR"] = {
-        countryCode: "TOR",
-        country: "Tor Nodes",
-        core: 0,
-      };
-    }
-    coreByCountry["TOR"].core = estimatedTorCore;
-  }
+  // Count Tor nodes separately (no Knots/Core distinction)
+  torNodesTotal = torNodes.length;
+  console.log(`Found ${torNodesTotal} Tor nodes (counted separately, no version distinction)`);
 
   // Convert to arrays and sort by count (desc) initially
   const knotsArray = Object.values(knotsByCountry)
@@ -260,6 +185,9 @@ async function main() {
 
   const output = {
     updatedAt: new Date().toISOString(),
+    tor: {
+      total: torNodesTotal,
+    },
     knots: {
       total: knotsTotal,
       byCountry: knotsArray,
@@ -279,10 +207,10 @@ async function main() {
   await fs.writeFile(OUTPUT_FILE, JSON.stringify(output, null, 2), "utf8");
 
   console.log("\n✅ Statistics saved:");
-  console.log(`  Knots: ${knotsTotal} total, ${knotsArray.length} countries/regions`);
-  console.log(`  Core: ${coreTotal} total, ${coreArray.length} countries/regions`);
+  console.log(`  Tor Nodes: ${torNodesTotal} total (separate section)`);
+  console.log(`  Knots: ${knotsTotal} total, ${knotsArray.length} countries`);
+  console.log(`  Core: ${coreTotal} total, ${coreArray.length} countries`);
   console.log(`  IPv4 Processed: ${processed}, Skipped: ${skipped}`);
-  console.log(`  Tor Nodes: ${torNodes.length} total`);
   console.log(`  Output: ${OUTPUT_FILE}`);
 }
 

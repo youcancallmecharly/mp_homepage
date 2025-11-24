@@ -10,6 +10,9 @@ type CountryStats = {
 
 type StatsPayload = {
   updatedAt?: string;
+  tor?: {
+    total: number;
+  };
   knots: {
     total: number;
     byCountry: CountryStats[];
@@ -124,13 +127,21 @@ export default function BitcoinNodeStats() {
     );
   }
 
+  // Filter out Tor nodes from Knots and Core (they're shown separately)
+  const knotsWithoutTor = stats.knots.byCountry.filter(
+    (item) => item.countryCode !== "TOR"
+  );
+  const coreWithoutTor = stats.core.byCountry.filter(
+    (item) => item.countryCode !== "TOR"
+  );
+
   const sortedKnots = sortCountries(
-    stats.knots.byCountry,
+    knotsWithoutTor,
     knotsSort.field,
     knotsSort.direction
   );
   const sortedCore = sortCountries(
-    stats.core.byCountry,
+    coreWithoutTor,
     coreSort.field,
     coreSort.direction
   );
@@ -145,6 +156,26 @@ export default function BitcoinNodeStats() {
         <p className="mp-node-stats-meta">
           Last updated: {formattedDate}
         </p>
+      )}
+
+      {/* Tor Nodes Section */}
+      {stats.tor && stats.tor.total > 0 && (
+        <div className="mp-node-stats-section">
+          <div className="mp-node-stats-header">
+            <h2 className="mp-heading">
+              <span style={{ marginRight: "0.5rem" }}>🧅</span>
+              Tor Nodes
+            </h2>
+            <div className="mp-node-stats-total">
+              Total: <strong>{stats.tor.total.toLocaleString()}</strong> nodes
+            </div>
+          </div>
+          <div className="mp-node-stats-tor-info">
+            <p className="mp-body">
+              Tor nodes are counted separately without version distinction (Knots/Core).
+            </p>
+          </div>
+        </div>
       )}
 
       {/* Knots Section */}
