@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "fetch:nodes": "node scripts/update-node-cache.js"
+    "fetch:nodes": "node scripts/update-node-cache.js",
+    "fetch:stats": "node scripts/update-node-stats.js"
   },
   "dependencies": {
     "next": "14.2.5",
