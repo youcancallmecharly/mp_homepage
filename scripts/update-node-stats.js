@@ -129,9 +129,12 @@ async function main() {
     const userAgent = nodeData[0] || "";
     const type = classifyNode(userAgent);
     
-    // Debug: log first few knots nodes found
-    if (type === "knots" && knotsTotal < 5) {
-      console.log(`  Found Knots node: ${address} - ${userAgent}`);
+    // Debug: log first few knots nodes found and sample user agents
+    if (processed < 10) {
+      console.log(`  Sample node ${processed + 1}: ${address.substring(0, 30)}... - UserAgent: "${userAgent}" - Type: ${type}`);
+    }
+    if (type === "knots") {
+      console.log(`  ✅ Found Knots node: ${address} - ${userAgent}`);
     }
 
     // Get country via GeoIP
