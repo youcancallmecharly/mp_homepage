@@ -1,65 +1,50 @@
 {
-  "updatedAt": "2025-11-24T08:41:16.902Z",
+  "updatedAt": "2025-11-24T13:42:48.144Z",
   "knots": {
     "total": 0,
     "byCountry": []
   },
   "core": {
-    "total": 245,
+    "total": 15126,
     "byCountry": [
+      {
+        "countryCode": "TOR",
+        "country": "Tor Nodes",
+        "core": 15026
+      },
       {
         "countryCode": "US",
         "country": "United States",
-        "core": 90
+        "core": 22
       },
       {
         "countryCode": "DE",
         "country": "Germany",
-        "core": 34
+        "core": 12
       },
       {
         "countryCode": "CA",
         "country": "Canada",
-        "core": 14
-      },
-      {
-        "countryCode": "FR",
-        "country": "France",
-        "core": 13
-      },
-      {
-        "countryCode": "CH",
-        "country": "Switzerland",
-        "core": 11
-      },
-      {
-        "countryCode": "KR",
-        "country": "South Korea",
-        "core": 11
-      },
-      {
-        "countryCode": "NL",
-        "country": "The Netherlands",
-        "core": 9
+        "core": 7
       },
       {
         "countryCode": "RU",
         "country": "Russia",
-        "core": 8
+        "core": 6
+      },
+      {
+        "countryCode": "CH",
+        "country": "Switzerland",
+        "core": 6
+      },
+      {
+        "countryCode": "FR",
+        "country": "France",
+        "core": 5
       },
       {
         "countryCode": "GB",
         "country": "United Kingdom",
-        "core": 8
-      },
-      {
-        "countryCode": "AU",
-        "country": "Australia",
-        "core": 6
-      },
-      {
-        "countryCode": "PL",
-        "country": "Poland",
         "core": 5
       },
       {
@@ -68,69 +53,49 @@
         "core": 5
       },
       {
-        "countryCode": "IT",
-        "country": "Italy",
+        "countryCode": "ES",
+        "country": "Spain",
         "core": 3
       },
       {
-        "countryCode": "SE",
-        "country": "Sweden",
+        "countryCode": "CZ",
+        "country": "Czechia",
         "core": 3
-      },
-      {
-        "countryCode": "SG",
-        "country": "Singapore",
-        "core": 2
       },
       {
         "countryCode": "JP",
         "country": "Japan",
+        "core": 3
+      },
+      {
+        "countryCode": "AT",
+        "country": "Austria",
         "core": 2
       },
       {
-        "countryCode": "BG",
-        "country": "Bulgaria",
+        "countryCode": "PL",
+        "country": "Poland",
         "core": 2
       },
       {
-        "countryCode": "NO",
-        "country": "Norway",
+        "countryCode": "NL",
+        "country": "The Netherlands",
         "core": 2
       },
       {
-        "countryCode": "IN",
-        "country": "India",
+        "countryCode": "AU",
+        "country": "Australia",
         "core": 2
       },
       {
-        "countryCode": "IL",
-        "country": "Israel",
-        "core": 1
+        "countryCode": "IT",
+        "country": "Italy",
+        "core": 2
       },
       {
-        "countryCode": "ZA",
-        "country": "South Africa",
-        "core": 1
-      },
-      {
-        "countryCode": "MD",
-        "country": "Moldova",
-        "core": 1
-      },
-      {
-        "countryCode": "LT",
-        "country": "Lithuania",
-        "core": 1
-      },
-      {
-        "countryCode": "MY",
-        "country": "Malaysia",
-        "core": 1
-      },
-      {
-        "countryCode": "TR",
-        "country": "Türkiye",
-        "core": 1
+        "countryCode": "BE",
+        "country": "Belgium",
+        "core": 2
       },
       {
         "countryCode": "PT",
@@ -138,13 +103,23 @@
         "core": 1
       },
       {
-        "countryCode": "RO",
-        "country": "Romania",
+        "countryCode": "KR",
+        "country": "South Korea",
         "core": 1
       },
       {
-        "countryCode": "CN",
-        "country": "China",
+        "countryCode": "TH",
+        "country": "Thailand",
+        "core": 1
+      },
+      {
+        "countryCode": "IN",
+        "country": "India",
+        "core": 1
+      },
+      {
+        "countryCode": "NO",
+        "country": "Norway",
         "core": 1
       },
       {
@@ -153,35 +128,35 @@
         "core": 1
       },
       {
-        "countryCode": "XX",
-        "country": "Unknown",
+        "countryCode": "PR",
+        "country": "Puerto Rico",
         "core": 1
       },
       {
-        "countryCode": "GR",
-        "country": "Greece",
+        "countryCode": "RO",
+        "country": "Romania",
         "core": 1
       },
       {
-        "countryCode": "LU",
-        "country": "Luxembourg",
+        "countryCode": "MX",
+        "country": "Mexico",
         "core": 1
       },
       {
-        "countryCode": "CZ",
-        "country": "Czechia",
+        "countryCode": "AE",
+        "country": "United Arab Emirates",
         "core": 1
       },
       {
-        "countryCode": "BH",
-        "country": "Bahrain",
+        "countryCode": "BG",
+        "country": "Bulgaria",
         "core": 1
       }
     ]
   },
   "meta": {
-    "processed": 245,
-    "skipped": 755,
-    "totalInSnapshot": 23673
+    "processed": 100,
+    "skipped": 0,
+    "totalInSnapshot": 23782
   }
 }

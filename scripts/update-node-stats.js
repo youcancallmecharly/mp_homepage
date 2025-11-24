@@ -174,7 +174,8 @@ async function main() {
   console.log(`Processing ${torNodes.length} Tor nodes (fetching details for classification)…`);
   let torKnotsCount = 0;
   let torCoreCount = 0;
-  const TOR_NODES_TO_CHECK = Math.min(100, torNodes.length); // Check up to 100 Tor nodes for type
+  // Check more Tor nodes for better accuracy (but still limited by rate limits)
+  const TOR_NODES_TO_CHECK = Math.min(200, torNodes.length); // Check up to 200 Tor nodes for type
   
   for (let i = 0; i < TOR_NODES_TO_CHECK; i++) {
     const [address, nodeData] = torNodes[i];
