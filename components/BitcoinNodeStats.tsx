@@ -41,18 +41,16 @@ export default function BitcoinNodeStats() {
   }, []);
 
   // Calculate pie chart segments
+  // Only Core (including Core V.30) vs Knots, without Tor
   function calculatePieChart(stats: BitrefStats) {
-    const total = stats.totalPublic.total;
-    const core = stats.bitcoinCore.total;
+    // Core total includes all Core nodes (Core V.30 is already included in bitcoinCore.total)
+    const coreTotal = stats.bitcoinCore.total;
     const knots = stats.bitcoinKnots.total;
-    const tor = stats.torNetwork.total;
-    const other = total - core - knots - tor;
+    const chartTotal = coreTotal + knots; // Only Core vs Knots comparison
 
     const segments = [
-      { label: "Bitcoin Core", value: core, color: "#ff8800" }, // Orange
+      { label: "Bitcoin Core", value: coreTotal, color: "#ff8800" }, // Orange
       { label: "Bitcoin Knots", value: knots, color: "#ffaa00" }, // Lighter orange
-      { label: "Tor Network", value: tor, color: "#46e9cf" }, // Türkis
-      { label: "Other", value: Math.max(0, other), color: "#cccccc" }, // Gray
     ].filter((s) => s.value > 0);
 
     let currentAngle = -90; // Start at top
@@ -61,7 +59,7 @@ export default function BitcoinNodeStats() {
     const centerY = 100;
 
     return segments.map((segment) => {
-      const percentage = (segment.value / total) * 100;
+      const percentage = (segment.value / chartTotal) * 100;
       const angle = (percentage / 100) * 360;
       const startAngle = currentAngle;
       const endAngle = currentAngle + angle;
@@ -193,7 +191,7 @@ export default function BitcoinNodeStats() {
 
         {/* Core V.30 (indented) */}
         <div className="mp-bitref-stat-item mp-bitref-indented">
-          <span className="mp-bitref-stat-label">(V.30)</span>
+          <span className="mp-bitref-stat-label">(Core v.30)</span>
           <span className="mp-bitref-stat-value">
             <span className="mp-bitref-number-red">
               ({stats.coreV30.total.toLocaleString()})
