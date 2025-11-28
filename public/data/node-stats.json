@@ -1,78 +1,163 @@
 {
-  "updatedAt": "2025-11-24T14:50:00.000Z",
+  "updatedAt": "2025-11-24T16:16:51.347Z",
   "tor": {
-    "total": 15026
+    "total": 15141
   },
   "knots": {
     "total": 0,
     "byCountry": []
   },
   "core": {
-    "total": 100,
+    "total": 500,
     "byCountry": [
       {
         "countryCode": "US",
         "country": "United States",
-        "core": 22
+        "core": 160
       },
       {
         "countryCode": "DE",
         "country": "Germany",
-        "core": 12
-      },
-      {
-        "countryCode": "CA",
-        "country": "Canada",
-        "core": 7
+        "core": 53
       },
       {
         "countryCode": "FR",
         "country": "France",
-        "core": 6
-      },
-      {
-        "countryCode": "GB",
-        "country": "United Kingdom",
-        "core": 5
+        "core": 26
       },
       {
         "countryCode": "NL",
         "country": "The Netherlands",
-        "core": 4
+        "core": 25
+      },
+      {
+        "countryCode": "GB",
+        "country": "United Kingdom",
+        "core": 25
+      },
+      {
+        "countryCode": "CA",
+        "country": "Canada",
+        "core": 23
       },
       {
         "countryCode": "RU",
         "country": "Russia",
-        "core": 4
-      },
-      {
-        "countryCode": "IT",
-        "country": "Italy",
-        "core": 3
+        "core": 21
       },
       {
         "countryCode": "AU",
         "country": "Australia",
-        "core": 3
-      },
-      {
-        "countryCode": "CH",
-        "country": "Switzerland",
-        "core": 3
+        "core": 17
       },
       {
         "countryCode": "FI",
         "country": "Finland",
-        "core": 2
-      },
-      {
-        "countryCode": "JP",
-        "country": "Japan",
-        "core": 2
+        "core": 14
       },
       {
         "countryCode": "ES",
         "country": "Spain",
+        "core": 13
+      },
+      {
+        "countryCode": "CH",
+        "country": "Switzerland",
+        "core": 11
+      },
+      {
+        "countryCode": "IT",
+        "country": "Italy",
+        "core": 9
+      },
+      {
+        "countryCode": "KR",
+        "country": "South Korea",
+        "core": 8
+      },
+      {
+        "countryCode": "AT",
+        "country": "Austria",
+        "core": 7
+      },
+      {
+        "countryCode": "JP",
+        "country": "Japan",
+        "core": 5
+      },
+      {
+        "countryCode": "PL",
+        "country": "Poland",
+        "core": 5
+      },
+      {
+        "countryCode": "BE",
+        "country": "Belgium",
+        "core": 5
+      },
+      {
+        "countryCode": "CZ",
+        "country": "Czechia",
+        "core": 5
+      },
+      {
+        "countryCode": "HU",
+        "country": "Hungary",
+        "core": 4
+      },
+      {
+        "countryCode": "SG",
+        "country": "Singapore",
+        "core": 4
+      },
+      {
+        "countryCode": "ZA",
+        "country": "South Africa",
+        "core": 4
+      },
+      {
+        "countryCode": "BR",
+        "country": "Brazil",
+        "core": 4
+      },
+      {
+        "countryCode": "PT",
+        "country": "Portugal",
+        "core": 4
+      },
+      {
+        "countryCode": "LT",
+        "country": "Lithuania",
+        "core": 3
+      },
+      {
+        "countryCode": "TW",
+        "country": "Taiwan",
+        "core": 3
+      },
+      {
+        "countryCode": "HK",
+        "country": "Hong Kong",
+        "core": 3
+      },
+      {
+        "countryCode": "IE",
+        "country": "Ireland",
+        "core": 3
+      },
+      {
+        "countryCode": "NO",
+        "country": "Norway",
+        "core": 3
+      },
+      {
+        "countryCode": "CN",
+        "country": "China",
+        "core": 3
+      },
+      {
+        "countryCode": "RO",
+        "country": "Romania",
         "core": 2
       },
       {
@@ -83,101 +168,36 @@
       {
         "countryCode": "NZ",
         "country": "New Zealand",
-        "core": 1
+        "core": 2
       },
       {
-        "countryCode": "CZ",
-        "country": "Czechia",
-        "core": 1
+        "countryCode": "MD",
+        "country": "Moldova",
+        "core": 2
       },
       {
-        "countryCode": "HK",
-        "country": "Hong Kong",
-        "core": 1
-      },
-      {
-        "countryCode": "NO",
-        "country": "Norway",
-        "core": 1
-      },
-      {
-        "countryCode": "IE",
-        "country": "Ireland",
-        "core": 1
-      },
-      {
-        "countryCode": "RO",
-        "country": "Romania",
-        "core": 1
-      },
-      {
-        "countryCode": "BR",
-        "country": "Brazil",
-        "core": 1
-      },
-      {
-        "countryCode": "BG",
-        "country": "Bulgaria",
-        "core": 1
-      },
-      {
-        "countryCode": "KR",
-        "country": "South Korea",
-        "core": 1
+        "countryCode": "SK",
+        "country": "Slovakia",
+        "core": 2
       },
       {
         "countryCode": "UA",
         "country": "Ukraine",
+        "core": 2
+      },
+      {
+        "countryCode": "BG",
+        "country": "Bulgaria",
+        "core": 2
+      },
+      {
+        "countryCode": "SI",
+        "country": "Slovenia",
         "core": 1
       },
       {
-        "countryCode": "PL",
-        "country": "Poland",
-        "core": 1
-      },
-      {
-        "countryCode": "SG",
-        "country": "Singapore",
-        "core": 1
-      },
-      {
-        "countryCode": "TR",
-        "country": "Turkey",
-        "core": 1
-      },
-      {
-        "countryCode": "TW",
-        "country": "Taiwan",
-        "core": 1
-      },
-      {
-        "countryCode": "LT",
-        "country": "Lithuania",
-        "core": 1
-      },
-      {
-        "countryCode": "HU",
-        "country": "Hungary",
-        "core": 1
-      },
-      {
-        "countryCode": "DK",
-        "country": "Denmark",
-        "core": 1
-      },
-      {
-        "countryCode": "IR",
-        "country": "Iran",
-        "core": 1
-      },
-      {
-        "countryCode": "MY",
-        "country": "Malaysia",
-        "core": 1
-      },
-      {
-        "countryCode": "GE",
-        "country": "Georgia",
+        "countryCode": "BH",
+        "country": "Bahrain",
         "core": 1
       },
       {
@@ -186,38 +206,8 @@
         "core": 1
       },
       {
-        "countryCode": "UY",
-        "country": "Uruguay",
-        "core": 1
-      },
-      {
-        "countryCode": "AE",
-        "country": "United Arab Emirates",
-        "core": 1
-      },
-      {
-        "countryCode": "IL",
-        "country": "Israel",
-        "core": 1
-      },
-      {
-        "countryCode": "SV",
-        "country": "El Salvador",
-        "core": 1
-      },
-      {
-        "countryCode": "BY",
-        "country": "Belarus",
-        "core": 1
-      },
-      {
-        "countryCode": "IN",
-        "country": "India",
-        "core": 1
-      },
-      {
-        "countryCode": "QA",
-        "country": "Qatar",
+        "countryCode": "MO",
+        "country": "Macao",
         "core": 1
       },
       {
@@ -226,48 +216,18 @@
         "core": 1
       },
       {
-        "countryCode": "ZA",
-        "country": "South Africa",
+        "countryCode": "CO",
+        "country": "Colombia",
         "core": 1
       },
       {
-        "countryCode": "AT",
-        "country": "Austria",
+        "countryCode": "KH",
+        "country": "Cambodia",
         "core": 1
       },
       {
-        "countryCode": "BE",
-        "country": "Belgium",
-        "core": 1
-      },
-      {
-        "countryCode": "SK",
-        "country": "Slovakia",
-        "core": 1
-      },
-      {
-        "countryCode": "ID",
-        "country": "Indonesia",
-        "core": 1
-      },
-      {
-        "countryCode": "CN",
-        "country": "China",
-        "core": 1
-      },
-      {
-        "countryCode": "UZ",
-        "country": "Uzbekistan",
-        "core": 1
-      },
-      {
-        "countryCode": "KE",
-        "country": "Kenya",
-        "core": 1
-      },
-      {
-        "countryCode": "PT",
-        "country": "Portugal",
+        "countryCode": "DO",
+        "country": "Dominican Republic",
         "core": 1
       },
       {
@@ -276,8 +236,38 @@
         "core": 1
       },
       {
-        "countryCode": "RE",
-        "country": "Reunion",
+        "countryCode": "DK",
+        "country": "Denmark",
+        "core": 1
+      },
+      {
+        "countryCode": "EE",
+        "country": "Estonia",
+        "core": 1
+      },
+      {
+        "countryCode": "MX",
+        "country": "Mexico",
+        "core": 1
+      },
+      {
+        "countryCode": "IN",
+        "country": "India",
+        "core": 1
+      },
+      {
+        "countryCode": "ID",
+        "country": "Indonesia",
+        "core": 1
+      },
+      {
+        "countryCode": "RS",
+        "country": "Serbia",
+        "core": 1
+      },
+      {
+        "countryCode": "VN",
+        "country": "Vietnam",
         "core": 1
       }
     ]
@@ -285,6 +275,6 @@
   "meta": {
     "processed": 500,
     "skipped": 0,
-    "totalInSnapshot": 23725
+    "totalInSnapshot": 23925
   }
 }

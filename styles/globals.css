@@ -424,4 +424,176 @@ a {
   }
 }
 
+/* BitRef Statistics Styles */
+.mp-bitref-stats {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.mp-bitref-stats-meta {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.mp-bitref-chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mp-bitref-pie-chart {
+  width: 200px;
+  height: 200px;
+  max-width: 100%;
+}
+
+.mp-bitref-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.mp-bitref-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Times New Roman", "Georgia", serif;
+  font-size: 0.9rem;
+}
+
+.mp-bitref-legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.mp-bitref-legend-label {
+  color: var(--mp-text);
+}
+
+.mp-bitref-stats-list {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.mp-bitref-stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  font-family: "Times New Roman", "Georgia", serif;
+}
+
+.mp-bitref-stat-item:last-child {
+  border-bottom: none;
+}
+
+.mp-bitref-stat-item:hover {
+  background: rgba(70, 233, 207, 0.05);
+}
+
+.mp-bitref-stat-item.mp-bitref-indented {
+  padding-left: 2.5rem;
+  font-size: 0.95em;
+}
+
+.mp-bitref-stat-item.mp-bitref-stat-total {
+  font-weight: bold;
+  border-top: 2px solid rgba(0, 0, 0, 0.2);
+  margin-top: 0.5rem;
+  padding-top: 1.25rem;
+}
+
+.mp-bitref-stat-label {
+  color: var(--mp-text);
+  font-size: 1.1rem;
+}
+
+.mp-bitref-stat-value {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.mp-bitref-number-orange {
+  color: #ff8800;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.mp-bitref-number-red {
+  color: #d00;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.mp-bitref-percentage {
+  color: var(--mp-text);
+  font-size: 0.95rem;
+  font-weight: normal;
+}
+
+.mp-bitref-stats-source {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 2rem;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .mp-bitref-chart-container {
+    padding: 1.5rem;
+  }
+
+  .mp-bitref-pie-chart {
+    width: 180px;
+    height: 180px;
+  }
+
+  .mp-bitref-chart-legend {
+    gap: 0.75rem;
+  }
+
+  .mp-bitref-stat-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.75rem 0.5rem;
+  }
+
+  .mp-bitref-stat-item.mp-bitref-indented {
+    padding-left: 1.5rem;
+  }
+
+  .mp-bitref-stat-value {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .mp-bitref-stat-label {
+    font-size: 1rem;
+  }
+
+  .mp-bitref-number-orange,
+  .mp-bitref-number-red {
+    font-size: 1.1rem;
+  }
+}
+
 

@@ -1,41 +1,16 @@
 import { useState, useEffect } from "react";
 
-type CountryStats = {
-  country: string;
-  countryCode: string;
-  knots: number;
-  core: number;
-  total: number;
+type BitrefStats = {
+  updatedAt: string;
+  bitcoinCore: { total: number; percentage: string };
+  coreV30: { total: number; percentage: string };
+  bitcoinKnots: { total: number; percentage: string };
+  torNetwork: { total: number; percentage: string };
+  totalPublic: { total: number };
 };
-
-type StatsPayload = {
-  updatedAt?: string;
-  tor?: {
-    total: number;
-  };
-  knots: {
-    total: number;
-    byCountry: CountryStats[];
-  };
-  core: {
-    total: number;
-    byCountry: CountryStats[];
-  };
-};
-
-type SortField = "country" | "count";
-type SortDirection = "asc" | "desc";
 
 export default function BitcoinNodeStats() {
-  const [stats, setStats] = useState<StatsPayload | null>(null);
-  const [knotsSort, setKnotsSort] = useState<{
-    field: SortField;
-    direction: SortDirection;
-  }>({ field: "count", direction: "desc" });
-  const [coreSort, setCoreSort] = useState<{
-    field: SortField;
-    direction: SortDirection;
-  }>({ field: "count", direction: "desc" });
+  const [stats, setStats] = useState<BitrefStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,9 +19,9 @@ export default function BitcoinNodeStats() {
 
     async function loadStats() {
       try {
-        const res = await fetch("/data/node-stats.json");
+        const res = await fetch("/data/bitref-stats.json");
         if (!res.ok) throw new Error(`Failed to load stats: ${res.status}`);
-        const payload = (await res.json()) as StatsPayload;
+        const payload = (await res.json()) as BitrefStats;
         if (cancelled) return;
         setStats(payload);
         setError(null);
@@ -65,53 +40,69 @@ export default function BitcoinNodeStats() {
     };
   }, []);
 
-  function sortCountries(
-    countries: CountryStats[],
-    field: SortField,
-    direction: SortDirection
-  ): CountryStats[] {
-    const sorted = [...countries].sort((a, b) => {
-      let comparison = 0;
-      if (field === "country") {
-        comparison = a.country.localeCompare(b.country);
-      } else {
-        comparison = (a.knots || a.core) - (b.knots || b.core);
-      }
-      return direction === "asc" ? comparison : -comparison;
+  // Calculate pie chart segments
+  function calculatePieChart(stats: BitrefStats) {
+    const total = stats.totalPublic.total;
+    const core = stats.bitcoinCore.total;
+    const knots = stats.bitcoinKnots.total;
+    const tor = stats.torNetwork.total;
+    const other = total - core - knots - tor;
+
+    const segments = [
+      { label: "Bitcoin Core", value: core, color: "#ff8800" }, // Orange
+      { label: "Bitcoin Knots", value: knots, color: "#ffaa00" }, // Lighter orange
+      { label: "Tor Network", value: tor, color: "#46e9cf" }, // Türkis
+      { label: "Other", value: Math.max(0, other), color: "#cccccc" }, // Gray
+    ].filter((s) => s.value > 0);
+
+    let currentAngle = -90; // Start at top
+    const radius = 80;
+    const centerX = 100;
+    const centerY = 100;
+
+    return segments.map((segment) => {
+      const percentage = (segment.value / total) * 100;
+      const angle = (percentage / 100) * 360;
+      const startAngle = currentAngle;
+      const endAngle = currentAngle + angle;
+
+      // Calculate path for pie slice
+      const startAngleRad = (startAngle * Math.PI) / 180;
+      const endAngleRad = (endAngle * Math.PI) / 180;
+      const largeArcFlag = angle > 180 ? 1 : 0;
+
+      const x1 = centerX + radius * Math.cos(startAngleRad);
+      const y1 = centerY + radius * Math.sin(startAngleRad);
+      const x2 = centerX + radius * Math.cos(endAngleRad);
+      const y2 = centerY + radius * Math.sin(endAngleRad);
+
+      const pathData = [
+        `M ${centerX} ${centerY}`,
+        `L ${x1} ${y1}`,
+        `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2}`,
+        "Z",
+      ].join(" ");
+
+      const labelAngle = startAngle + angle / 2;
+      const labelRadius = radius * 0.7;
+      const labelX = centerX + labelRadius * Math.cos((labelAngle * Math.PI) / 180);
+      const labelY = centerY + labelRadius * Math.sin((labelAngle * Math.PI) / 180);
+
+      currentAngle = endAngle;
+
+      return {
+        ...segment,
+        pathData,
+        labelX,
+        labelY,
+        percentage: percentage.toFixed(1),
+      };
     });
-    return sorted;
-  }
-
-  function toggleSort(
-    currentSort: { field: SortField; direction: SortDirection },
-    newField: SortField,
-    setSort: (sort: { field: SortField; direction: SortDirection }) => void
-  ) {
-    if (currentSort.field === newField) {
-      setSort({
-        field: newField,
-        direction: currentSort.direction === "asc" ? "desc" : "asc",
-      });
-    } else {
-      setSort({ field: newField, direction: "desc" });
-    }
-  }
-
-  function getCountryFlag(countryCode: string): string {
-    if (!countryCode) return "🌍";
-    // Special case for Tor nodes
-    if (countryCode === "TOR") return "🧅";
-    if (countryCode.length !== 2) return "🌍";
-    const codePoints = countryCode
-      .toUpperCase()
-      .split("")
-      .map((char) => 127397 + char.charCodeAt(0));
-    return String.fromCodePoint(...codePoints);
   }
 
   if (loading) {
     return (
-      <div className="mp-node-stats">
+      <div className="mp-bitref-stats">
         <p className="mp-body">Loading node statistics…</p>
       </div>
     );
@@ -119,7 +110,7 @@ export default function BitcoinNodeStats() {
 
   if (error || !stats) {
     return (
-      <div className="mp-node-stats">
+      <div className="mp-bitref-stats">
         <p className="mp-body" style={{ color: "#d00" }}>
           {error || "No statistics available."}
         </p>
@@ -127,164 +118,142 @@ export default function BitcoinNodeStats() {
     );
   }
 
-  // Filter out Tor nodes from Knots and Core (they're shown separately)
-  const knotsWithoutTor = stats.knots.byCountry.filter(
-    (item) => item.countryCode !== "TOR"
-  );
-  const coreWithoutTor = stats.core.byCountry.filter(
-    (item) => item.countryCode !== "TOR"
-  );
-
-  const sortedKnots = sortCountries(
-    knotsWithoutTor,
-    knotsSort.field,
-    knotsSort.direction
-  );
-  const sortedCore = sortCountries(
-    coreWithoutTor,
-    coreSort.field,
-    coreSort.direction
-  );
-
   const formattedDate = stats.updatedAt
     ? new Date(stats.updatedAt).toLocaleString()
     : null;
 
+  const pieSegments = calculatePieChart(stats);
+
   return (
-    <div className="mp-node-stats">
+    <div className="mp-bitref-stats">
       {formattedDate && (
-        <p className="mp-node-stats-meta">
+        <p className="mp-bitref-stats-meta">
           Last updated: {formattedDate}
         </p>
       )}
 
-      {/* Tor Nodes Section */}
-      {stats.tor && stats.tor.total > 0 && (
-        <div className="mp-node-stats-section">
-          <div className="mp-node-stats-header">
-            <h2 className="mp-heading">
-              <span style={{ marginRight: "0.5rem" }}>🧅</span>
-              Tor Nodes
-            </h2>
-            <div className="mp-node-stats-total">
-              Total: <strong>{stats.tor.total.toLocaleString()}</strong> nodes
+      {/* Pie Chart */}
+      <div className="mp-bitref-chart-container">
+        <svg
+          viewBox="0 0 200 200"
+          className="mp-bitref-pie-chart"
+          aria-label="Bitcoin Node Distribution"
+        >
+          {pieSegments.map((segment, index) => (
+            <g key={index}>
+              <path
+                d={segment.pathData}
+                fill={segment.color}
+                stroke="#fff"
+                strokeWidth="2"
+              />
+              {parseFloat(segment.percentage) > 5 && (
+                <text
+                  x={segment.labelX}
+                  y={segment.labelY}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fontSize="10"
+                  fill="#222"
+                  fontWeight="bold"
+                >
+                  {segment.percentage}%
+                </text>
+              )}
+            </g>
+          ))}
+        </svg>
+        <div className="mp-bitref-chart-legend">
+          {pieSegments.map((segment, index) => (
+            <div key={index} className="mp-bitref-legend-item">
+              <span
+                className="mp-bitref-legend-color"
+                style={{ backgroundColor: segment.color }}
+              />
+              <span className="mp-bitref-legend-label">{segment.label}</span>
             </div>
-          </div>
-          <div className="mp-node-stats-tor-info">
-            <p className="mp-body">
-              Tor nodes are counted separately without version distinction (Knots/Core).
-            </p>
-          </div>
-        </div>
-      )}
-
-      {/* Knots Section */}
-      <div className="mp-node-stats-section">
-        <div className="mp-node-stats-header">
-          <h2 className="mp-heading">Knots</h2>
-          <div className="mp-node-stats-total">
-            Total: <strong>{stats.knots.total.toLocaleString()}</strong> nodes
-          </div>
-        </div>
-
-        <div className="mp-node-stats-controls">
-          <button
-            className={`mp-node-sort-btn ${
-              knotsSort.field === "country" ? "mp-node-sort-btn-active" : ""
-            }`}
-            onClick={() => toggleSort(knotsSort, "country", setKnotsSort)}
-          >
-            Sort by Country
-            {knotsSort.field === "country" &&
-              (knotsSort.direction === "asc" ? " ↑" : " ↓")}
-          </button>
-          <button
-            className={`mp-node-sort-btn ${
-              knotsSort.field === "count" ? "mp-node-sort-btn-active" : ""
-            }`}
-            onClick={() => toggleSort(knotsSort, "count", setKnotsSort)}
-          >
-            Sort by Count
-            {knotsSort.field === "count" &&
-              (knotsSort.direction === "asc" ? " ↑" : " ↓")}
-          </button>
-        </div>
-
-        <div className="mp-node-stats-list">
-          {sortedKnots.length > 0 ? (
-            sortedKnots.map((item) => (
-              <div key={item.countryCode} className="mp-node-stats-item">
-                <span className="mp-node-stats-flag">
-                  {getCountryFlag(item.countryCode)}
-                </span>
-                <span className="mp-node-stats-country">{item.country}</span>
-                <span className="mp-node-stats-count">
-                  {item.knots.toLocaleString()}
-                </span>
-              </div>
-            ))
-          ) : (
-            <p className="mp-body">No Knots nodes found.</p>
-          )}
+          ))}
         </div>
       </div>
 
-      {/* Core Section */}
-      <div className="mp-node-stats-section">
-        <div className="mp-node-stats-header">
-          <h2 className="mp-heading">Core</h2>
-          <div className="mp-node-stats-total">
-            Total: <strong>{stats.core.total.toLocaleString()}</strong> nodes
-          </div>
+      {/* Statistics List */}
+      <div className="mp-bitref-stats-list">
+        {/* Bitcoin Core */}
+        <div className="mp-bitref-stat-item">
+          <span className="mp-bitref-stat-label">Bitcoin Core</span>
+          <span className="mp-bitref-stat-value">
+            <span className="mp-bitref-number-orange">
+              {stats.bitcoinCore.total.toLocaleString()}
+            </span>
+            <span className="mp-bitref-percentage">
+              {" "}({stats.bitcoinCore.percentage}%)
+            </span>
+          </span>
         </div>
 
-        <div className="mp-node-stats-controls">
-          <button
-            className={`mp-node-sort-btn ${
-              coreSort.field === "country" ? "mp-node-sort-btn-active" : ""
-            }`}
-            onClick={() => toggleSort(coreSort, "country", setCoreSort)}
-          >
-            Sort by Country
-            {coreSort.field === "country" &&
-              (coreSort.direction === "asc" ? " ↑" : " ↓")}
-          </button>
-          <button
-            className={`mp-node-sort-btn ${
-              coreSort.field === "count" ? "mp-node-sort-btn-active" : ""
-            }`}
-            onClick={() => toggleSort(coreSort, "count", setCoreSort)}
-          >
-            Sort by Count
-            {coreSort.field === "count" &&
-              (coreSort.direction === "asc" ? " ↑" : " ↓")}
-          </button>
+        {/* Core V.30 (indented) */}
+        <div className="mp-bitref-stat-item mp-bitref-indented">
+          <span className="mp-bitref-stat-label">(V.30)</span>
+          <span className="mp-bitref-stat-value">
+            <span className="mp-bitref-number-red">
+              ({stats.coreV30.total.toLocaleString()})
+            </span>
+            <span className="mp-bitref-percentage">
+              {" "}({stats.coreV30.percentage}%)
+            </span>
+          </span>
         </div>
 
-        <div className="mp-node-stats-list">
-          {sortedCore.length > 0 ? (
-            sortedCore.map((item) => (
-              <div key={item.countryCode} className="mp-node-stats-item">
-                <span className="mp-node-stats-flag">
-                  {getCountryFlag(item.countryCode)}
-                </span>
-                <span className="mp-node-stats-country">{item.country}</span>
-                <span className="mp-node-stats-count">
-                  {item.core.toLocaleString()}
-                </span>
-              </div>
-            ))
-          ) : (
-            <p className="mp-body">No Core nodes found.</p>
-          )}
+        {/* Bitcoin Knots */}
+        <div className="mp-bitref-stat-item">
+          <span className="mp-bitref-stat-label">Bitcoin Knots</span>
+          <span className="mp-bitref-stat-value">
+            <span className="mp-bitref-number-orange">
+              {stats.bitcoinKnots.total.toLocaleString()}
+            </span>
+            <span className="mp-bitref-percentage">
+              {" "}({stats.bitcoinKnots.percentage}%)
+            </span>
+          </span>
+        </div>
+
+        {/* Tor Network */}
+        <div className="mp-bitref-stat-item">
+          <span className="mp-bitref-stat-label">Tor Network</span>
+          <span className="mp-bitref-stat-value">
+            <span className="mp-bitref-number-orange">
+              {stats.torNetwork.total.toLocaleString()}
+            </span>
+            <span className="mp-bitref-percentage">
+              {" "}({stats.torNetwork.percentage}%)
+            </span>
+          </span>
+        </div>
+
+        {/* Total Public */}
+        <div className="mp-bitref-stat-item mp-bitref-stat-total">
+          <span className="mp-bitref-stat-label">Total Public</span>
+          <span className="mp-bitref-stat-value">
+            <span className="mp-bitref-number-orange">
+              {stats.totalPublic.total.toLocaleString()}
+            </span>
+          </span>
         </div>
       </div>
 
-      {/* Data Source Attribution */}
-      <p className="mp-node-stats-source">
-        (Data source: <a href="https://bitnodes.io" target="_blank" rel="noopener noreferrer" className="mp-link">Bitnodes.io</a>, GeoIP: <a href="https://ip-api.com" target="_blank" rel="noopener noreferrer" className="mp-link">ip-api.com</a>)
+      {/* Source Attribution */}
+      <p className="mp-bitref-stats-source">
+        (Data source:{" "}
+        <a
+          href="https://bitref.com/nodes/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mp-link"
+        >
+          bitref.com/nodes/
+        </a>
+        )
       </p>
     </div>
   );
 }
-

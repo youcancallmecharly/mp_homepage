@@ -1,0 +1,22 @@
+{
+  "updatedAt": "2025-11-28T06:13:23.368Z",
+  "bitcoinCore": {
+    "total": 18536,
+    "percentage": "78.5"
+  },
+  "coreV30": {
+    "total": 3023,
+    "percentage": "12.8"
+  },
+  "bitcoinKnots": {
+    "total": 5041,
+    "percentage": "21.3"
+  },
+  "torNetwork": {
+    "total": 14880,
+    "percentage": "63.0"
+  },
+  "totalPublic": {
+    "total": 23624
+  }
+}
