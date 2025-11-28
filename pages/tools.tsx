@@ -18,7 +18,6 @@ const categories: ToolCategory[] = [
     title: "Markets",
     items: [
       { label: "Mempool", href: "https://mempool.space" },
-      { label: "Bits Live", href: "https://bitslog.com" },
       { label: "Glassnode", href: "https://glassnode.com" },
       { label: "TradingView", href: "https://www.tradingview.com" },
       { label: "Coinmetrics", href: "https://coinmetrics.io" },
