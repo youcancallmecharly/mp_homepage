@@ -49,8 +49,8 @@ export default function BitcoinNodeStats() {
     const chartTotal = coreTotal + knots; // Only Core vs Knots comparison
 
     const segments = [
-      { label: "Bitcoin Core", value: coreTotal, color: "#ff8800" }, // Orange
-      { label: "Bitcoin Knots", value: knots, color: "#ffaa00" }, // Lighter orange
+      { label: "Bitcoin Core", value: coreTotal, color: "#ffaa00" }, // Lighter orange
+      { label: "Bitcoin Knots", value: knots, color: "#ff8800" }, // Orange
     ].filter((s) => s.value > 0);
 
     let currentAngle = -90; // Start at top
