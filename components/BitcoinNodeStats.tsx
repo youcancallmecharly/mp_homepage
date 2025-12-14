@@ -188,13 +188,13 @@ export default function BitcoinNodeStats() {
 
         {/* Core V.30 (indented) */}
         <div className="mp-bitref-stat-item mp-bitref-indented">
-          <span className="mp-bitref-stat-label">(Core v.30)</span>
+          <span className="mp-bitref-stat-label">Core v.30</span>
           <span className="mp-bitref-stat-value">
-            <span className="mp-bitref-number-red">
-              ({stats.coreV30.total.toLocaleString()})
-            </span>
             <span className="mp-bitref-percentage">
-              {" "}({stats.coreV30.percentage}%)
+              ({stats.coreV30.percentage}%)
+            </span>
+            <span className="mp-bitref-number-red">
+              {" "}{stats.coreV30.total.toLocaleString()}
             </span>
           </span>
         </div>
