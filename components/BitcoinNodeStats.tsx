@@ -203,11 +203,11 @@ export default function BitcoinNodeStats() {
         <div className="mp-bitref-stat-item">
           <span className="mp-bitref-stat-label">Bitcoin Knots</span>
           <span className="mp-bitref-stat-value">
-            <span className="mp-bitref-number-orange">
-              {stats.bitcoinKnots.total.toLocaleString()}
-            </span>
             <span className="mp-bitref-percentage">
-              {" "}({stats.bitcoinKnots.percentage}%)
+              ({stats.bitcoinKnots.percentage}%)
+            </span>
+            <span className="mp-bitref-number-orange">
+              {" "}{stats.bitcoinKnots.total.toLocaleString()}
             </span>
           </span>
         </div>
