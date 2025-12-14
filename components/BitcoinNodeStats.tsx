@@ -183,9 +183,6 @@ export default function BitcoinNodeStats() {
             <span className="mp-bitref-number-orange">
               {stats.bitcoinCore.total.toLocaleString()}
             </span>
-            <span className="mp-bitref-percentage">
-              {" "}({stats.bitcoinCore.percentage}%)
-            </span>
           </span>
         </div>
 
@@ -222,15 +219,12 @@ export default function BitcoinNodeStats() {
             <span className="mp-bitref-number-orange">
               {stats.torNetwork.total.toLocaleString()}
             </span>
-            <span className="mp-bitref-percentage">
-              {" "}({stats.torNetwork.percentage}%)
-            </span>
           </span>
         </div>
 
         {/* Total Public */}
         <div className="mp-bitref-stat-item mp-bitref-stat-total">
-          <span className="mp-bitref-stat-label">Total Public</span>
+          <span className="mp-bitref-stat-label">Total Public (clear-net)</span>
           <span className="mp-bitref-stat-value">
             <span className="mp-bitref-number-orange">
               {stats.totalPublic.total.toLocaleString()}
