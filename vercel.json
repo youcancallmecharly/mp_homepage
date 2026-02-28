@@ -4,6 +4,10 @@
     {
       "src": "/node-globe-embed",
       "dest": "/node-globe-embed.html"
+    },
+    {
+      "src": "/.well-known/lnurlp/pinky",
+      "dest": "/api/lnurlp/pinky"
     }
   ]
 }
