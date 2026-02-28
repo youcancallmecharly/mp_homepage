@@ -8,6 +8,10 @@
     {
       "src": "/.well-known/lnurlp/pinky",
       "dest": "/api/lnurlp/pinky"
+    },
+    {
+      "src": "/.well-known/nostr.json",
+      "dest": "/api/nostr.json"
     }
   ]
 }
