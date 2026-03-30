@@ -14,6 +14,7 @@ const navItems = [
   { href: "/education", label: "Education" },
   { href: "/youtube", label: "Youtube" },
   { href: "/tools", label: "Tools" },
+  { href: "/library", label: "Library" },
   { href: "/links", label: "Links" },
   { href: "/nodes", label: "Nodes" }
 ];

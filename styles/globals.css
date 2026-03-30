@@ -227,15 +227,147 @@ a {
   font-weight: bold;
 }
 
-.mp-chart-frame {
-  width: 100%;
-  border: 0;
-  min-height: 420px;
-  border-radius: 6px;
+.mp-chart-shell {
+  background: #fff;
+  border-radius: 10px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  padding: 1rem;
   margin-bottom: 1.5rem;
 }
 
+.mp-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.mp-chart-svg {
+  width: 100%;
+  height: auto;
+  min-height: 260px;
+  background: linear-gradient(to bottom, #f8fbff 0%, #ffffff 100%);
+  border: 1px solid #e3e8ef;
+  border-radius: 8px;
+}
+
+.mp-chart-line {
+  fill: none;
+  stroke: #00a595;
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+}
+
+.mp-chart-up {
+  color: #0a8f4c;
+  font-weight: 600;
+}
+
+.mp-chart-down {
+  color: #b42318;
+  font-weight: 600;
+}
+
+.mp-chart-meta {
+  margin: 0.5rem 0 0;
+  color: #666;
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+/* Library */
+.mp-library {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.mp-library-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  align-items: start;
+  margin-top: 1rem;
+}
+
+.mp-library-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid #e3e8ef;
+  border-radius: 10px;
+  padding: 0.75rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.mp-library-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.14);
+}
+
+.mp-library-cover-box {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.mp-library-cover {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.mp-library-caption {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: #334155;
+  padding: 0 0.15rem 0.15rem;
+}
+
+.mp-library-author {
+  font-weight: 600;
+}
+
+.mp-library-dot {
+  opacity: 0.5;
+}
+
+.mp-library-tag {
+  color: #475569;
+  text-transform: lowercase;
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 1100px) {
+  .mp-library-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .mp-library-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .mp-library-grid {
+    grid-template-columns: 1fr;
+  }
+}
 .mp-node-globe-container {
   width: min(100%, 640px);
   aspect-ratio: 1 / 1;
@@ -593,6 +725,171 @@ a {
   .mp-bitref-number-orange,
   .mp-bitref-number-red {
     font-size: 1.1rem;
+  }
+}
+
+/* Mining Lottery Styles */
+.mp-mining-lottery {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.mp-lottery-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.mp-button {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-family: inherit;
+}
+
+.mp-button-primary {
+  background-color: var(--mp-turquoise);
+  color: var(--mp-text);
+}
+
+.mp-button-primary:hover:not(:disabled) {
+  background-color: #3dd4b8;
+}
+
+.mp-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.mp-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.mp-checkbox-label input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.mp-lottery-meta {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+.mp-miners-table-container {
+  margin-top: 2rem;
+  overflow-x: auto;
+}
+
+.mp-miners-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mp-miners-table thead {
+  background-color: var(--mp-bg-concrete);
+}
+
+.mp-miners-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--mp-heading);
+  border-bottom: 2px solid var(--mp-bg-concrete-dark);
+}
+
+.mp-miners-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.mp-miners-table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.mp-miners-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.mp-rank {
+  font-weight: 600;
+  color: var(--mp-accent-magenta);
+  text-align: center;
+  width: 60px;
+}
+
+.mp-hostname {
+  font-weight: 500;
+}
+
+.mp-difficulty {
+  font-weight: 600;
+  color: var(--mp-turquoise);
+  font-size: 1.1rem;
+}
+
+.mp-last-update {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.mp-no-miners {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.mp-no-miners code {
+  background-color: #f0f0f0;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .mp-mining-lottery {
+    padding: 1rem 0.5rem;
+  }
+
+  .mp-lottery-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .mp-button {
+    width: 100%;
+  }
+
+  .mp-miners-table {
+    font-size: 0.9rem;
+  }
+
+  .mp-miners-table th,
+  .mp-miners-table td {
+    padding: 0.5rem;
+  }
+
+  .mp-difficulty {
+    font-size: 1rem;
   }
 }
 
