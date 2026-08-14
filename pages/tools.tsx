@@ -47,9 +47,7 @@ const categories: ToolCategory[] = [
   {
     title: "Hardware Wallets",
     items: [
-      { label: "Trezor", href: "https://trezor.io" },
-      { label: "BitBox", href: "https://shiftcrypto.ch/bitbox02" },
-      { label: "Ledger", href: "https://www.ledger.com" }
+      { label: "BitBox", href: "https://shiftcrypto.ch/bitbox02" }
     ]
   }
 ];
