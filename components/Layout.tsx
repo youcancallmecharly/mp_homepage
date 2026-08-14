@@ -15,8 +15,7 @@ const navItems = [
   { href: "/youtube", label: "Youtube" },
   { href: "/tools", label: "Tools" },
   { href: "/library", label: "Library" },
-  { href: "/links", label: "Links" },
-  { href: "/nodes", label: "Nodes" }
+  { href: "/links", label: "Links" }
 ];
 
 export default function Layout({ title, children }: LayoutProps) {
@@ -31,7 +30,7 @@ export default function Layout({ title, children }: LayoutProps) {
         <title>{pageTitle}</title>
         <meta
           name="description"
-          content="Money Penny – Bitcoin education, tools, links and node visualization."
+          content="Money Penny – Bitcoin education, tools and links."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
