@@ -227,6 +227,26 @@ a {
   font-weight: bold;
 }
 
+.mp-table-wrap {
+  overflow-x: auto;
+  margin: 1rem 0 1.25rem;
+}
+
+.mp-table-wrap .mp-table {
+  margin-top: 0;
+}
+
+.mp-note {
+  border-left: 4px solid var(--mp-accent-magenta);
+  background: rgba(255, 255, 255, 0.72);
+  padding: 0.75rem 1rem;
+  margin: 1rem 0 1.25rem;
+}
+
+.mp-note p:last-child {
+  margin-bottom: 0;
+}
+
 .mp-chart-shell {
   background: #fff;
   border-radius: 10px;
@@ -354,6 +374,15 @@ a {
 @media (max-width: 1100px) {
   .mp-library-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .mp-nav-desktop {
+    gap: 0.75rem;
+  }
+
+  .mp-nav-desktop .mp-nav-link {
+    letter-spacing: 0.08em;
+    font-size: 0.8rem;
   }
 }
 

@@ -6,19 +6,21 @@ import { useRouter } from "next/router";
 
 type LayoutProps = {
   title?: string;
+  description?: string;
   children: React.ReactNode;
 };
 
 const navItems = [
   { href: "/", label: "Base" },
   { href: "/education", label: "Education" },
+  { href: "/money", label: "Money" },
   { href: "/youtube", label: "Youtube" },
   { href: "/tools", label: "Tools" },
   { href: "/library", label: "Library" },
   { href: "/links", label: "Links" }
 ];
 
-export default function Layout({ title, children }: LayoutProps) {
+export default function Layout({ title, description, children }: LayoutProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
 
@@ -30,7 +32,9 @@ export default function Layout({ title, children }: LayoutProps) {
         <title>{pageTitle}</title>
         <meta
           name="description"
-          content="Money Penny – Bitcoin education, tools and links."
+          content={
+            description ?? "Money Penny – Bitcoin education, tools and links."
+          }
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

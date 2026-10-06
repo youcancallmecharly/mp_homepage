@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import Link from "next/link";
 
 export default function EducationPage() {
   return (
@@ -92,6 +93,14 @@ export default function EducationPage() {
             </tr>
           </tfoot>
         </table>
+        <p className="mp-body">
+          For the history of money, why prices rise, and how Bitcoin differs
+          from a central bank digital currency, see{" "}
+          <Link href="/money" className="mp-link">
+            Money
+          </Link>
+          .
+        </p>
       </section>
     </Layout>
   );
