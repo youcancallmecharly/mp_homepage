@@ -9,7 +9,9 @@ import {
   euroBasketClaimAfterHorizon,
   factsSince1971,
   faq,
-  faqJsonLd,
+  moneyPageDescription,
+  moneyPageTitle,
+  pageJsonLd,
   formatEur,
   formatPct,
   formatUsd,
@@ -40,11 +42,13 @@ export default function MoneyPage() {
   return (
     <Layout
       title="Money"
-      description="Why prices rise, what inflation does to savings, and how Bitcoin differs from a central bank digital currency."
+      documentTitle={moneyPageTitle}
+      description={moneyPageDescription}
+      ogType="article"
     >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }}
       />
 
       <h1 className="mp-heading" id="sound-money">

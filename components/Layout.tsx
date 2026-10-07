@@ -4,9 +4,13 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
+const siteOrigin = "https://moneypenny.li";
+
 type LayoutProps = {
   title?: string;
+  documentTitle?: string;
   description?: string;
+  ogType?: "website" | "article";
   children: React.ReactNode;
 };
 
@@ -20,22 +24,38 @@ const navItems = [
   { href: "/links", label: "Links" }
 ];
 
-export default function Layout({ title, description, children }: LayoutProps) {
+export default function Layout({
+  title,
+  documentTitle,
+  description,
+  ogType = "website",
+  children,
+}: LayoutProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
 
-  const pageTitle = title ? `${title} | Money Penny` : "Money Penny";
+  const pageTitle =
+    documentTitle ?? (title ? `${title} | Money Penny` : "Money Penny");
+  const pageDescription =
+    description ?? "Money Penny – Bitcoin education, tools and links.";
+  const path = router.asPath.split("?")[0].split("#")[0] || "/";
+  const canonical = `${siteOrigin}${path === "/" ? "/" : path}`;
 
   return (
     <>
       <Head>
         <title>{pageTitle}</title>
-        <meta
-          name="description"
-          content={
-            description ?? "Money Penny – Bitcoin education, tools and links."
-          }
-        />
+        <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={canonical} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:type" content={ogType} />
+        <meta property="og:image" content={`${siteOrigin}/moneypenny-icon.jpg`} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:image" content={`${siteOrigin}/moneypenny-icon.jpg`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

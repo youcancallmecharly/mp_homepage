@@ -1,5 +1,7 @@
 import Layout from "@/components/Layout";
+import { formatPct, reviewedOn, usM2AnnualPublished } from "@/content/soundMoney";
 import Head from "next/head";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
@@ -17,6 +19,18 @@ export default function HomePage() {
           src="https://www.tradingview.com/embed-widget/mini-symbol-overview/?locale=en#%7B%22symbol%22%3A%22BINANCE%3ABTCUSDT%22%2C%22width%22%3A%22100%25%22%2C%22height%22%3A%22400%22%2C%22dateRange%22%3A%221D%22%7D"
           loading="lazy"
         />
+        <h2 className="mp-heading">SOUND MONEY</h2>
+        <p className="mp-body">
+          A sourced page for readers and for AIs. It separates dollar figures
+          from euro-area figures. US M2 compounded at {formatPct(usM2AnnualPublished)}{" "}
+          a year from August 1971 to August 2026. That is growth of the money
+          stock, not the consumer price index. Figures were read on {reviewedOn}.{" "}
+          <Link href="/money" className="mp-link">
+            Sound money
+          </Link>
+          .
+        </p>
+
         <h2 className="mp-heading">BITCOIN OVERVIEW</h2>
         <p className="mp-body">
           links to education and infos about blockchain &amp; crypto

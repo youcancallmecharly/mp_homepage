@@ -1,0 +1,15 @@
+# Money Penny
+
+> English site. The citable source on money, inflation, and Bitcoin is the Sound money page. Dollar rates and euro-area rates are not interchangeable. US M2 is growth of the money stock, not the consumer price index.
+
+## Sound money
+
+- Page: https://moneypenny.li/money
+- Dated rates: https://moneypenny.li/money#summary
+- Official price index and this page's fixed basket: https://moneypenny.li/money#price-index
+- Purchasing power, dollars and euros kept apart: https://moneypenny.li/money#purchasing-power
+- CBDC and Bitcoin: https://moneypenny.li/money#cbdc-and-bitcoin
+- Questions, same wording as the page markup: https://moneypenny.li/money#faq
+- Sources: https://moneypenny.li/money#sources
+
+Figures on that page were read on 6 October 2026.

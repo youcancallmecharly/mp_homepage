@@ -435,16 +435,50 @@ export const faq = [
   },
 ];
 
-export const faqJsonLd = {
+const moneyPageUrl = "https://moneypenny.li/money";
+
+export const moneyPageTitle =
+  "Sound money: inflation, 1971, Bitcoin vs CBDC | Money Penny";
+
+export const moneyPageDescription = `US M2 grew ${formatPct(usM2AnnualPublished)} a year from Aug 1971 to Aug 2026 (money stock, not CPI). This page's euro-area basket rose ${formatPct(basketAnnualRate)} a year, 2015–2025. Figures read ${reviewedOn}.`;
+
+export const pageJsonLd = {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  dateModified: "2026-10-06",
-  mainEntity: faq.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.answer,
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": moneyPageUrl,
+      url: moneyPageUrl,
+      name: "Sound money: inflation, 1971, Bitcoin vs CBDC",
+      description: moneyPageDescription,
+      inLanguage: "en",
+      dateModified: "2026-10-06",
+      isPartOf: {
+        "@type": "WebSite",
+        name: "Money Penny",
+        url: "https://moneypenny.li/",
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "Money Penny",
+        url: "https://moneypenny.li/",
+      },
+      about: ["Money", "Inflation", "Bitcoin", "Central bank digital currency"],
     },
-  })),
+    {
+      "@type": "FAQPage",
+      "@id": `${moneyPageUrl}#faq`,
+      url: `${moneyPageUrl}#faq`,
+      inLanguage: "en",
+      dateModified: "2026-10-06",
+      mainEntity: faq.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    },
+  ],
 };
