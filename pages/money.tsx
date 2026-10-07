@@ -688,6 +688,17 @@ export default function MoneyPage() {
           issuer or the provider will not pass does not pass. Foreign use is
           not a default. It exists when the authorities open it.
         </p>
+        <p className="mp-body">
+          An automated agent that pays another party needs a unit it can receive
+          without opening an account at a bank or a payment service provider.
+          Bitcoin allows that on the rules already stated above: no issuer, and
+          settlement between any two parties that can reach the network. The
+          agent still needs keys, a fee, and a counterparty that accepts the
+          payment. A digital euro, on the ECB FAQ as of {reviewedOn}, would
+          still move through supervised intermediaries inside the euro area.
+          This page only states which design properties fit settlement without
+          a bank or payment-service account.
+        </p>
       </section>
 
       <section id="faq">
